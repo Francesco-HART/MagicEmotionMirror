@@ -28,40 +28,43 @@ const useFaceDetection = () => {
   const faceDetection = async () => {
     let current: any = videoRef.current;
     current as faceapi.TNetInput;
+    new Promise((resolve) => {
+      setInterval(async () => {
+        try {
+          const detections = await faceapi
+            .detectAllFaces(current, new faceapi.TinyFaceDetectorOptions())
+            .withFaceLandmarks()
+            .withFaceExpressions();
+          canvasRef.current.innerHtml = faceapi.createCanvasFromMedia(current);
+          faceapi.matchDimensions(canvasRef.current, {
+            width: 940,
+            height: 650,
+          });
+          const resized = faceapi.resizeResults(detections, {
+            width: 940,
+            height: 650,
+          });
+          // to draw the detection onto the detected face i.e the box
+          //faceapi.draw.drawDetections(canvasRef.current, resized);
+          //to draw the the points onto the detected face
+          //faceapi.draw.drawFaceLandmarks(canvasRef.current, resized);
 
-    setInterval(async () => {
-      try {
-        const detections = await faceapi
-          .detectAllFaces(current, new faceapi.TinyFaceDetectorOptions())
-          .withFaceLandmarks()
-          .withFaceExpressions();
-        canvasRef.current.innerHtml = faceapi.createCanvasFromMedia(current);
-        faceapi.matchDimensions(canvasRef.current, {
-          width: 940,
-          height: 650,
-        });
-        const resized = faceapi.resizeResults(detections, {
-          width: 940,
-          height: 650,
-        });
-        // to draw the detection onto the detected face i.e the box
-        //faceapi.draw.drawDetections(canvasRef.current, resized);
-        //to draw the the points onto the detected face
-        //faceapi.draw.drawFaceLandmarks(canvasRef.current, resized);
+          //to analyze and output the current expression by the detected face
+          faceapi.draw.drawFaceExpressions(canvasRef.current, resized);
 
-        //to analyze and output the current expression by the detected face
-        faceapi.draw.drawFaceExpressions(canvasRef.current, resized);
+          const canSend = await canSendFile();
+          if (canSend) {
+            console.log({ canSend });
 
-        const canSend = await canSendFile();
-        if (canSend) {
-          console.log({ canSend });
-
-          await convertCanavasToFileSystemAndSend(canvasRef.current);
+            await convertCanavasToFileSystemAndSend(canvasRef.current);
+          }
+          resolve({});
+        } catch (err: any) {
+          console.log("error mais oklm c'est catch");
+          resolve();
         }
-      } catch (err: any) {
-        console.log("error mais oklm c'est catch");
-      }
-    }, 10000);
+      }, 4000);
+    });
   };
 
   return {
