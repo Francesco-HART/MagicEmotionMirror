@@ -59,19 +59,27 @@ export class AppService {
   getEmotion(texts: string[]): Emotion {
     let emotionValue = 0;
     let emotionType = EmotionTypeEnum.neutral;
-
-    texts.forEach((t: string, index) => {
-      if (t !== '') {
-        const elemsSplited = t.split('(');
-        const value = Number(elemsSplited[1].replace(')', ''));
-        const emotion = elemsSplited[0].replace(/ /g, '');
-        // TODO verify if the emotion is in the list
-        if (value != NaN && emotionValue < value && EmotionTypeEnum[emotion]) {
-          emotionValue = value;
-          emotionType = EmotionTypeEnum[emotion];
+    try {
+      texts.forEach((t: string, index) => {
+        if (t !== '') {
+          const elemsSplited = t.split('(');
+          const value = Number(elemsSplited[1].replace(')', ''));
+          const emotion = elemsSplited[0].replace(/ /g, '');
+          // TODO verify if the emotion is in the list
+          if (
+            value != NaN &&
+            emotionValue < value &&
+            EmotionTypeEnum[emotion]
+          ) {
+            emotionValue = value;
+            emotionType = EmotionTypeEnum[emotion];
+          }
         }
-      }
-    });
+      });
+    } catch (error) {
+      console.log('error', error);
+    }
+
     return { emotionType, emotionValue };
   }
 
