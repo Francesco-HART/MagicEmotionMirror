@@ -12,7 +12,11 @@ export class AppController {
 
   @Get('emotion')
   async getEmotion(): Promise<string> {
-    return await this.appService.getEmotionFeel();
+    try {
+      return await this.appService.getEmotionFeel();
+    } catch (error) {
+      console.log('error');
+    }
   }
 
   @Get('limit')

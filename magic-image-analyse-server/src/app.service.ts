@@ -110,8 +110,8 @@ export class AppService {
         }
         const emotionsArray: string[] = [];
 
-        for (let fileNumber in files) {
-          const filePath = this.formatFileNames(fileNumber);
+        for (let file of files) {
+          const filePath = this.directoryPath + file;
           // Make one pass and make the file complete
           try {
             const texts = await this.getText(filePath);
