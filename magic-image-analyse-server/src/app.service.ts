@@ -117,15 +117,37 @@ export class AppService {
             const texts = await this.getText(filePath);
             const emotion = this.getEmotion(texts);
             emotionsArray.push(emotion.emotionType);
+            fs.unlink(filePath, (err) => {
+              if (err) console.log('error on remove file');
+            });
           } catch (error) {
+            fs.unlink(filePath, (err) => {
+              if (err) console.log('error on remove file');
+            });
             console.log('error on read file text', error);
           }
-          fs.unlink(filePath, (err) => {
-            if (err) console.log('error on remove file');
-          });
         }
         resolve(emotionsArray);
       });
     });
   }
+  // private removeEmotionsFiles(): Promise<string[]> {
+  //   return new Promise(async (resolve, reject) => {
+  //     fs.readdir(this.directoryPath, async (err, files) => {
+  //       if (err) {
+  //         console.error('Could not list the directory.', err);
+  //         process.exit(1);
+  //       }
+  //       const emotionsArray: string[] = [];
+
+  //       for (let fileNumber in files) {
+  //         // Make one pass and make the file complete
+  //         fs.unlink(filePath, (err) => {
+  //           if (err) console.log('error on remove file');
+  //         });
+  //       }
+  //       resolve(emotionsArray);
+  //     });
+  //   });
+  // }
 }
