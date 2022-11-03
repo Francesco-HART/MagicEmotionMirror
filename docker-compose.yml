@@ -1,0 +1,46 @@
+version: "3.4"
+
+services:
+
+  api:
+    container_name: "api"
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    volumes:
+      - ./api:/app
+    ports:
+      - 5000:5000
+
+  client:
+    container_name: "client"
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    volumes:
+      - ./client:/app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+
+  # proxy:
+  #   restart: unless-stopped
+  #   image: caddy:2-alpine
+  #   container_name: proxy
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   depends_on:
+  #     - api
+  #   volumes:
+  #     - ./Caddyfile:/etc/caddy/Caddyfile
+  #     - caddy_data:/data
+  #     - caddy_config:/config
+
+
+volumes:
+  caddy_data:
+  caddy_config:
+
+

@@ -1,0 +1,5 @@
+lejeunedeveloppeur.fr {
+    reverse_proxy  magic-client-AI:3000
+    reverse_proxy /magic-image-analyse-server/* magic-image-analyse-server:5000
+  }         
+
