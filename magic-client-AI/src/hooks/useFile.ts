@@ -1,6 +1,6 @@
 import axios from "axios";
 const axiosInstance = axios.create({
-  baseURL: "http://10.49.33.120:5000/api",
+  baseURL: "http://192.168.61.54:5000/api",
 });
 const useFile = () => {
   const convertCanavasToFileSystemAndSend = async (
