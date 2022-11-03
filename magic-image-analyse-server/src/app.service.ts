@@ -9,7 +9,7 @@ export class AppService {
   directoryPath = 'test2/';
   fileName = 'test';
 
-  limitDirectory = 5;
+  limitDirectory = 10;
   config = {
     lang: 'eng',
     oem: 1,
