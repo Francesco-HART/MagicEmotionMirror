@@ -29,7 +29,7 @@ function App() {
         height="650"
         className="app__canvas"
       />
-      {/* https://core-electronics.com.au/attachments/uploads/article-downloads-ws2812b-python-scripts.zip */}
+      {/* https://github.com/luxdvie/WS2812Controller */}
     </div>
   );
 }
