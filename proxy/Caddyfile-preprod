@@ -1,4 +1,4 @@
-45.155.171.145 {
+lejeunedeveloppeur.fr {
     reverse_proxy  client:3000
     reverse_proxy /api/* api:5000
   }         
