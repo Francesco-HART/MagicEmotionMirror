@@ -28,7 +28,7 @@ const useFaceDetection = () => {
   const faceDetection = async () => {
     let current: any = videoRef.current;
     current as faceapi.TNetInput;
-    new Promise((resolve: any) => {
+    new Promise((resolve) => {
       setInterval(async () => {
         try {
           const detections = await faceapi
