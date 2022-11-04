@@ -1,6 +1,7 @@
 FROM node:14-buster-slim
 
 WORKDIR '/app'
+WORKDIR '/app'
 
 RUN apt update && \
     apt install -y software-properties-common && \
@@ -19,5 +20,15 @@ RUN npm install
 
 COPY ./ ./
 
-CMD ["npm", "run", "start:dev"]
+RUN npm run build
+
+ARG NODE_ENV=production
+
+ENV NODE_ENV=${NODE_ENV}
+COPY ./ ./
+
+CMD ["npm", "run", "start"]
+
+
 EXPOSE 5000
+
